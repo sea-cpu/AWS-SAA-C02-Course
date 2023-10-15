@@ -241,7 +241,7 @@ Keys never leave KMS.
 Keys use **FIPS 140-2 (L2)** security standard. Some of KMS's features
 are compliant with Level 3, but all are Level 2.
 
-KMS manages **CMK - Cusstomer Master Key**. It is logical and contains
+KMS manages **CMK - Customer Master Key**, which is now renamed to KMS keys. It is logical and contains
 
 - ID
 - Date
@@ -255,9 +255,12 @@ You can generate or import the key material.
 
 CMKs can be used for up to **4KB of data**
 
+![image](https://github.com/alozano-77/AWS-SAA-C02-Course/assets/51827690/54cc116c-cdc1-43f3-8a58-b6ae981e7762)
+
+
 #### Data Encryption Key (DEKs)
 
-Using the generate key and a customer master key, this generates a
+Using the generate key and a customer master key(KMS Keys), this generates a
 data encryption key that can be used to encrypt data larger than 4KB in size.
 
 KMS does not store the DEKs. Once it hands the keys over, it does not care.
@@ -278,7 +281,9 @@ The encrypted data and the encrypted DEK are stored next to each other.
 
 #### Important Concepts.
 
-Customer Master Keys (CMK) are isolated to a region and never leave
+Customer Master Keys (CMK) or (KMS Keys) are isolated to a region and never leave that region.
+
+Though, there are Multi-region Keys as well(advanced topic).
 
 Two types of CMKs: AWS managed or Customer managed CMKs
 
@@ -296,12 +301,15 @@ You can create an alias. This is also per region.
 
 #### Key Policy (resource policy)
 
-Every customer managed key (CMK) has one.
+Every customer managed key (KMS Key) has one.
 
-Unlike other policies, the key must be told to trust the key.
+Unlike other policies, the key must be told to trust the key. This is like a resource based policy of S3 bucket.
 
 In order for IAM to work, IAM is trusted by the account, and the account
 must be trusted by the key.
+
+![image](https://github.com/alozano-77/AWS-SAA-C02-Course/assets/51827690/7a216ef8-2b35-481e-83ca-9106ca3e85e1)
+
 
 ### KMS Key Demo
 
@@ -323,7 +331,7 @@ aws kms decrypt \
 
 ### Object Encryption
 
-Buckets aren't encrypted, **objects are**. Each object can use a different
+Buckets cannot be encrypted, **objects are**(objects which are inside buckets). Each object can use a different
 encryption method. Both of the two types use encryption in transit for S3.
 
 S3 object encryption is focused on encryption at rest. Encryption in
@@ -416,7 +424,7 @@ If you don't have access to KMS, you don't have access to the object.
 
 Picking a storage class can be done while uploading a specific object.
 The default is S3 standard. Once an object is uploaded to a specific class,
-it can be changed as long as the conditions are met
+it can be changed as long as the conditions are met.
 
 #### S3 Standard
 
